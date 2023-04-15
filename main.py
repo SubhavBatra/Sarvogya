@@ -28,8 +28,8 @@ def extract_pdf(query):
 
 
 st.set_page_config(page_title="Sarvogya", layout="wide", initial_sidebar_state="expanded")  
-st.title("SARVOGYA")
-st.markdown("India's first ever AI assistance to hospitals!")
+st.title("SARVOGYA: India's first ever AI assistance to hospitals!")
+# st.markdown("India's first ever AI assistance to hospitals!")
 
 report = st.file_uploader("Upload the patient's medical report:", type="pdf")
 if report is not None:
@@ -45,7 +45,7 @@ if report is not None:
     st.write("HbA1c: " + list[7])
     st.write("Cholestrol level: " + list[8])
     st.write("Glucose level: " + list[9])
-    st.title("Questions from the doctor:")
+    st.title("Doctor's Questionnaire:")
     name = list[0]
     age = int(list[1])
     if list[2] == "Male":
@@ -73,7 +73,7 @@ else:
     hgb = st.text_input("Enter Hemoglobin level of the patient:")
     chol = st.text_input("Enter Cholestrol level of the patient:")
     glu = st.text_input("Enter Glucose level of the patient:")
-    st.title("Questions from the doctor:")
+    st.title("Doctor's Questionnaire:")
     cpt = st.text_input("Enter chest pain intensity(1-5):")
     bp = st.text_input("Enter blood pressure of the patient:")
     fbs = st.text_input("Enter whether fasting blood sugar level is above 120 of the patient:")
