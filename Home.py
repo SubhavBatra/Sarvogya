@@ -1,31 +1,9 @@
 import streamlit as st
 from pdfquery import PDFQuery
-
-def extract_pdf(query):
-    pdf = PDFQuery(query)
-    pdf.load()
-    pdf.tree.write("Puranjay.xml", pretty_print=True, encoding='utf-8')
-    name = pdf.pq('LTTextLineHorizontal:in_bbox("91.112, 784.766, 185.927, 793.385")').text()
-    name = name.split(' ')[0:3]
-    name = ' '.join(name)
-
-    age = pdf.pq('LTTextLineHorizontal:in_bbox("369.375, 773.439, 404.833, 782.057")').text()
-    age = age.split(' ')[0:1]
-    age = ''.join(age)
-
-    gender = pdf.pq('LTTextLineHorizontal:in_bbox("370.36, 762.111, 389.519, 770.73")').text()
-    gender = gender.split(' ')[0:1]
-    gender = ' '.join(gender)
-
-    hgb = pdf.pq('LTTextLineHorizontal:in_bbox("283.877, 563.789, 305.934, 572.605")').text()
-    rbc_count = pdf.pq('LTTextLineHorizontal:in_bbox("283.877, 510.894, 301.032, 519.71")').text()
-    tlc = pdf.pq('LTTextLineHorizontal:in_bbox("283.877, 378.658, 301.032, 387.474")').text()
-    tpc = pdf.pq('LTTextLineHorizontal:in_bbox("283.877, 161.613, 298.582, 170.429")').text()
-    hbA1c = pdf.pq('LTTextLineHorizontal:in_bbox("278.361, 581.322, 290.615, 590.138")').text()
-    cholesterol = pdf.pq('LTTextLineHorizontal:in_bbox("272.156, 350.586, 299.114, 359.401")').text()
-    glu_fasting = pdf.pq('LTTextLineHorizontal:in_bbox("272.156, 573.146, 294.213, 581.962")').text()
-    return [name,age,gender,hgb,rbc_count,tlc,tpc,hbA1c,cholesterol,glu_fasting]
-
+import numpy as np
+import pandas as pd
+import pickle
+from pdf_extract import extract_pdf
 
 st.set_page_config(page_title="Sarvogya", layout="wide", initial_sidebar_state="expanded")  
 st.title("SARVOGYA")
@@ -88,37 +66,39 @@ else:
 
 
 if submit_button:
-    import numpy as np
-    import pandas as pd
-    import pickle
 
     #create a dataframe to store admitted patients
-    df = pd.DataFrame()
+    # df = pd.DataFrame()
 
     loaded_model = pickle.load(open('model.pkl', 'rb'))
-    def predict_admission():
-        input = np.asarray([age,gender,cpt,bp,chol,fbs,ekg,maxhr,exercise_ang,ST_dep,ST_slope,fluro,thall])
-        input = input.reshape(1, -1)
-        prediction = loaded_model.predict(input)
-        urgency_score = loaded_model.predict_proba(input)[:, 1]
-        #change data type of urgency_score to float
-        urgency_score = urgency_score.astype(float)*100
-        if prediction == 1:
-            st.title("Admit patient with urgency: " + str(urgency_score))
-        else:
-            st.title("No need to admit the patient.")
-        df = pd.DataFrame()
-        #append temp and urgency_score if prediction is 1
-        if prediction == 1:
-            input = np.append(input,urgency_score)
-            input = input.reshape(1, 14)
-            df = pd.DataFrame(input, columns=['Age','Gender','Chest Pain Type','Blood Pressure','Cholestrol','Fasting Blood Sugar','EKG','Max Heart Rate','Exercise Induced Angina','ST Depression','ST Slope','Fluro Vessels','Thallium Stress Test','Urgency Score'])
-            return df
-        else:
-            return df
+    # def predict_admission():
+    input = np.asarray([age,gender,cpt,bp,chol,fbs,ekg,maxhr,exercise_ang,ST_dep,ST_slope,fluro,thall])
+    input = input.reshape(1, -1)
+    prediction = loaded_model.predict(input)
+    urgency_score = loaded_model.predict_proba(input)[:, 1]
+            #change data type of urgency_score to float
+    urgency_score = urgency_score.astype(float)*100
+    if prediction == 1:
+        st.title("Admit patient with urgency: " + str(urgency_score))
+                #submit button 
+        Admit = st.button("Admit")
+    else:
+        st.title("No need to admit the patient.")
+        # df = pd.DataFrame()
+        # #append temp and urgency_score if prediction is 1
+        # if prediction == 1:
+        #     input = np.append(input,urgency_score)
+        #     input = input.reshape(1, 14)
+        #     df = pd.DataFrame(input, columns=['Age','Gender','Chest Pain Type','Blood Pressure','Cholestrol','Fasting Blood Sugar','EKG','Max Heart Rate','Exercise Induced Angina','ST Depression','ST Slope','Fluro Vessels','Thallium Stress Test','Urgency Score'])
+        #     return df
+        # else:
+        #     return df
 
-    df = df.append(predict_admission())
 
+    # df = df.append(predict_admission())
+# if Admit:
+    # redirect to Forecast_Beds page
+    
 
 
 

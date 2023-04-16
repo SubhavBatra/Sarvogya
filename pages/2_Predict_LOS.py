@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 
 
+
 st.set_page_config(page_title="Sarvogya", layout="wide", initial_sidebar_state="expanded")  
 st.title("SARVOGYA")
 # st.markdown("India's first ever AI assistance to hospitals!")
@@ -9,7 +10,7 @@ st.title("SARVOGYA")
 st.write("Enter the patient's details manually:")
 
 # add a note to the sidebar
-st.sidebar.markdown("## For simplicity and saving time, we have already filled in some of the values.")
+st.sidebar.markdown("## For simplicity and saving time, as there are 33 fields required, we have pre-filled some of the fields with the values")
 pid = 405
 age = 50
 gender = 1
