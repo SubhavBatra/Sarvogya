@@ -3,11 +3,11 @@ import pandas as pd
 import numpy as np
 
 st.set_page_config(page_title="Sarvogya", layout="wide", initial_sidebar_state="expanded")  
-st.title("Sarvogya: Hospital Bed Forecasting")
+st.title("SARVOGYA: Hospital Bed Forecasting")
 #read data
 df_test = pd.read_csv('bedForecast.csv')
 #display data in a table and visualize it
-st.markdown("## Admitted Patients sorted based on Urgency score")
+st.markdown("## Admitted Patients sorted based on Urgency Score")
 st.table(df_test)
 
 submit_button = st.button('Forecast Bed Availability:')
@@ -89,6 +89,8 @@ if submit_button:
     #plot line chart with days_stored on x-axis and beds_avail on y-axis
     df = pd.DataFrame({'Days': days_stored, 'Beds Available': beds_avail})
     st.line_chart(df, width=0, height=0, use_container_width=True)
+
+
 
 
 
