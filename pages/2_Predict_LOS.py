@@ -4,13 +4,11 @@ import streamlit as st
 
 
 st.set_page_config(page_title="Sarvogya", layout="wide", initial_sidebar_state="expanded")  
-st.title("SARVOGYA")
-# st.markdown("India's first ever AI assistance to hospitals!")
-
-st.write("Enter the patient's details manually:")
+st.title("SARVOGYA: Prediticting the Length of Stay (LOS) of a patient")
 
 # add a note to the sidebar
-st.sidebar.markdown("## For simplicity and saving time, as there are 33 fields required, we have pre-filled some of the fields with the values")
+st.sidebar.markdown("## Our trained model, utilised to predict the Length of Stay (LOS) of a patient uses 33 input features. Here are some of them and others have been fetched from the implemented dataset. \nThis is just a simulation of how certain fields can be inputted and other can be extracted from medical reports as displayed previously.") 
+
 pid = 405
 age = 50
 gender = 1
@@ -19,7 +17,7 @@ alcohol = st.text_input("Alcohol (1/0):")
 htn = st.text_input("Hypertension (1/0):")
 cad = st.text_input("Coronary artery disease (1/0):")
 prior_cmp = st.text_input("Prior heart attack (1/0):")
-hb = 13.1
+hb = 15.6
 
 tlc = st.text_input("Total Leukocyte count:")
 platelet = st.text_input("Total Platelet count:")

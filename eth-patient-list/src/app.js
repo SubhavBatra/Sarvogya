@@ -97,7 +97,11 @@ App = {
     },
     createTask: async () => {
       App.setLoading(true)
-      const content = $('#newTask').val()
+      // const content = $('#newTask').val()
+
+      const sooraj = await $.getJSON('data.json');
+      const content = JSON.stringify(sooraj[0], null, 2);
+
       await App.todoList.createTask(content, {from: App.account})
       window.location.reload()
   },
